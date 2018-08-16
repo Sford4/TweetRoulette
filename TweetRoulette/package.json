@@ -1,0 +1,11 @@
+{
+  "name": "tweet-roulette",
+  "version": "1.0.0",
+  "description": "A game using twitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Spencer Ford",
+  "license": "ISC"
+}
