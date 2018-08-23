@@ -8,8 +8,7 @@ import Navigation from './src/navigation/Navigation';
 import MainMenu from './src/screens/MainMenu';
 import Options from './src/screens/Options';
 import StartGame from './src/screens/StartGame/StartGamePage';
-import Game from './src/screens/Game/Game';
-import Rules from './src/screens/Rules';
+import GamePage from './src/screens/Game/GamePage';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -31,11 +30,11 @@ export default class App extends React.Component {
 
 const AppStackNavigator = createStackNavigator(
 	{
+		StartGame: StartGame,
 		MainMenu: MainMenu,
 		Options: Options,
-		StartGame: StartGame,
-		Game: Game,
-		Rules: Rules
+
+		Game: GamePage
 	},
 	{
 		headerMode: 'none',

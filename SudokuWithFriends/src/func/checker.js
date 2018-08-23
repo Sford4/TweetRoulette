@@ -25,7 +25,7 @@ let _validate = data => {
 
 // reorganize data into three structures
 let _reorganizeData = data => {
-	console.log('in reorganize!');
+	console.log('in reorganize!', data);
 	_rows = data;
 	_cols = [];
 	_grid = [];

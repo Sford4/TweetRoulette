@@ -21,7 +21,7 @@ export default class Header extends React.Component {
 				<TouchableHighlight onPress={() => this.goHome()}>
 					<Image
 						style={{ width: 100, height: 70, marginHorizontal: 10 }}
-						source={require('../../../assets/lordOfTheFlagsLogo.png')}
+						source={require('../../../assets/sudokuLogo.png')}
 					/>
 				</TouchableHighlight>
 				<Text style={[masterStyles.title, { width: '45%', textAlign: 'center' }]}>{this.props.title}</Text>

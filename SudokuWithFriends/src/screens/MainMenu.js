@@ -18,7 +18,7 @@ export default class Login extends React.Component {
 			<AppConsumer>
 				{context => (
 					<View style={styles.container}>
-						<Image style={{ width: 180, height: 130 }} source={require('../../assets/lordOfTheFlagsLogo.png')} />
+						<Image style={{ width: 180, height: 130 }} source={require('../../assets/sudokuLogo.png')} />
 						<Text style={masterStyles.bigTitle}>Menu</Text>
 						<TouchableHighlight
 							style={masterStyles.button}

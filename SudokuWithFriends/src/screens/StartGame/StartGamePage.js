@@ -1,65 +1,77 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Alert, TextInput, AsyncStorage } from 'react-native';
 import { AppConsumer } from '../../context/context';
 import Navigation from '../../navigation/Navigation';
 
 // COMPONENT IMPORTS
-import SelectAvatar from './SelectAvatar';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import Header from '../components/header';
+
+// STYLES IMPORTS
+import masterStyles from '../../styles/masterStyles';
+
+const DIFFICULTIES = ['easy', 'medium', 'hard', 'insane', 'why'];
 
 class StartGamePage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			avatar: '0',
-			username: null
+			name: null,
+			difficulty: 'easy'
 		};
+		this._retrieveData();
 	}
 
-	componentWillUpdate(NextProps, NextState) {
-		if (NextProps.game) {
-			// console.log("game we're going to", NextProps.game);
-			Navigation.navigate('Game');
+	_retrieveData = async () => {
+		try {
+			const value = await AsyncStorage.getItem('SudokuName');
+			if (value !== null) {
+				this.setState({
+					name: value
+				});
+			}
+		} catch (error) {
+			console.log('error retrieving name');
 		}
-	}
-
-	saveAvatar = img => {
-		// console.log('img at save avatar', img);
-		this.setState({
-			avatar: img.toString()
-		});
 	};
 
-	saveUsername = username => {
-		this.setState({
-			username: username
+	generateDifficultyBtns = difficulties => {
+		return difficulties.map((dif, index) => {
+			return (
+				<TouchableHighlight
+					key={index}
+					style={this.state.difficulty === dif ? styles.chosen : styles.notChosen}
+					onPress={() => this.setState({ difficulty: dif })}
+				>
+					<Text>{dif.toUpperCase()}</Text>
+				</TouchableHighlight>
+			);
 		});
 	};
-
-	startGame = (img, username) => {
+	startGame = username => {
 		if (!username) {
 			Alert.alert('Please enter your name!');
 			return;
 		}
-		console.log('STARTING GAME!', img);
-		this.props.startGame({
-			organizer: username,
-			avatars: [img]
-		});
+		AsyncStorage.setItem('SudokuName', this.state.name);
+		Navigation.navigate('Game', { name: this.state.name, difficulty: this.state.difficulty });
 	};
 
 	render() {
 		return (
 			<View style={styles.container}>
-				<SelectAvatar
-					goToPage={this.goToPage}
-					saveAvatar={this.saveAvatar}
-					saveUsername={this.saveUsername}
-					username={this.state.username}
-					avatar={this.state.avatar}
-					startGame={this.startGame}
+				<Header title="Start a Game!" />
+				<Text>Your Name</Text>
+				<TextInput
+					style={masterStyles.input}
+					placeholder="e.g. Sarah"
+					onChangeText={text => this.setState({ name: text })}
+					value={this.state.name}
 				/>
-
+				{this.generateDifficultyBtns(DIFFICULTIES)}
+				<TouchableHighlight style={styles.nextBtn} onPress={() => this.startGame(this.state.name)}>
+					<Text>Next</Text>
+				</TouchableHighlight>
 			</View>
 		);
 	}
@@ -77,5 +89,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'space-around'
+	},
+	chosen: {
+		backgroundColor: 'yellow'
+	},
+	notChosen: {
+		backgroundColor: 'white'
 	}
 });

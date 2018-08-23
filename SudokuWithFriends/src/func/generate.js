@@ -24,12 +24,11 @@ var NR_SQUARES = 81; // Number of squares
 // Define difficulties by how many squares are given to the player in a new
 // puzzle.
 var DIFFICULTY = {
-	easy: 62,
-	medium: 53,
-	hard: 44,
-	veryHard: 35,
-	insane: 26,
-	inhuman: 17
+	easy: 80,
+	medium: 50,
+	hard: 42,
+	insane: 30,
+	why: 17
 };
 
 // Blank character and board representation
@@ -67,7 +66,7 @@ export default class Sudoku {
                 "hard":         43
                 H":    34
                 "insane":       25
-                "inhuman":      17
+                "why":      17
             
             
         You may also enter a custom number of squares to be given, e.g.,
@@ -161,10 +160,23 @@ export default class Sudoku {
 				console.log('board solved', this.solve(board));
 				if (this.solve(board)) {
 					let solvedBoard = this.solve(board);
-					let boardArray = this.board_string_to_grid(solvedBoard);
-					let reorganizedBoard = Checker.initChecker(boardArray);
+					let boardArrayToTest = this.board_string_to_grid(solvedBoard);
+					let reorganizedBoard = Checker.initChecker(boardArrayToTest);
 					console.log('valid board', Checker.isValid(reorganizedBoard));
-					return board;
+					let boardArrayToSend = this.board_string_to_grid(board);
+					for (let i = 0; i < boardArrayToSend.length; i++) {
+						for (let k = 0; k < boardArrayToSend[i].length; k++) {
+							let originalValue = boardArrayToSend[i][k];
+							boardArrayToSend[i][k] = {
+								selectedBy: false,
+								value: originalValue,
+								id: i + '' + k,
+								staticSquare: originalValue === '.' ? false : true,
+								notes: []
+							};
+						}
+					}
+					return boardArrayToSend;
 				}
 			}
 		}

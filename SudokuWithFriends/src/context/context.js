@@ -7,15 +7,7 @@ import Navigation from '../navigation/Navigation';
 const initialState = {
 	user: null,
 	gameFound: null,
-	game: null,
-	avatars: [
-		{ name: 'image0', img: require('../../assets/person1.png') },
-		{ name: 'image1', img: require('../../assets/person2.png') },
-		{ name: 'image2', img: require('../../assets/person3.png') },
-		{ name: 'image3', img: require('../../assets/person4.png') },
-		{ name: 'image4', img: require('../../assets/person5.png') },
-		{ name: 'image5', img: require('../../assets/person6.png') }
-	]
+	game: null
 };
 
 const HEADERS = {
@@ -78,6 +70,11 @@ export class AppProvider extends React.Component {
 		this.setState({
 			gameFound: null
 		});
+	};
+
+	generateBoard = difficulty => {
+		let newBoard = new Generator();
+		return newBoard.generate(difficulty);
 	};
 
 	startGame = async data => {
@@ -143,7 +140,8 @@ export class AppProvider extends React.Component {
 					findGameByAddCode: this.findGameByAddCode,
 					gameFound: this.state.gameFound,
 					clearGameSearch: this.clearGameSearch,
-					findGameById: this.findGameById
+					findGameById: this.findGameById,
+					generateBoard: this.generateBoard
 				}}
 			>
 				{this.props.children}

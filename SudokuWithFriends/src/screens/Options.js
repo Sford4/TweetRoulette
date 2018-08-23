@@ -20,7 +20,7 @@ class Options extends React.Component {
 		return (
 			<View style={styles.container}>
 				<TouchableHighlight onPress={() => this.goHome()}>
-					<Image style={{ width: 180, height: 130 }} source={require('../../assets/lordOfTheFlagsLogo.png')} />
+					<Image style={{ width: 180, height: 130 }} source={require('../../assets/sudokuLogo.png')} />
 				</TouchableHighlight>
 				<Text style={masterStyles.bigTitle}>Options</Text>
 				<TouchableHighlight style={masterStyles.button} onPress={() => this.goHome()}>
